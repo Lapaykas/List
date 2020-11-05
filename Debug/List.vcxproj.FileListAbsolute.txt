@@ -1,0 +1,2 @@
+D:\Repository\List\Debug\List.exe
+D:\Repository\List\Debug\List.pdb
