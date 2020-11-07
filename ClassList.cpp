@@ -30,16 +30,16 @@ List::~List()
 
 void List::push_back(const std::vector<char*>* vector_of_words) noexcept
 {
-	if (m_head == nullptr)
+	if (m_head == nullptr)//TODO дублирование кода!
 	{
-		m_head = new Node(vector_of_words);
+		m_head = new Node(vector_of_words); //TODO - пораждает исключения
 		m_last_element = m_head;
 	}
 	else
 	{
 		Node* current = this->m_last_element;		
-		current->m_pNext = new Node(vector_of_words);
-		current->m_pNext->m_pPrev = current;
+		current->m_pNext = new Node(vector_of_words);	// TODO Это отдельный метод присоединения ноды
+		current->m_pNext->m_pPrev = current;			//
 		m_last_element = current->m_pNext;
 	}
 	m_size_of_list++;
@@ -67,7 +67,7 @@ void List::print_list()
 	Node* current = this->m_head;
 	do
 	{
-		for(int i=0;i<current->m_size_ppWords;i++)
+		for(int i=0;i<current->m_size_ppWords;i++) //TODO тип i выбран неверно
 			std::cout << current->m_ppWords[i] << " ";
  		current = current->m_pNext;
 		std::cout << std::endl;

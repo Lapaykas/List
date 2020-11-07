@@ -10,7 +10,7 @@ class List
 public:
 	List();
 	~List();
-	int m_size_of_list;
+	int m_size_of_list; //TODO нужен ли тут public?
 	
 	//void delete_element(const int index) noexcept;
 	void push_back(const std::vector<char*>* vector_of_words) noexcept;
@@ -25,10 +25,10 @@ private:
 	public:
 		Node* m_pPrev;
 		Node* m_pNext;
-		char** m_ppWords;	
-		int m_size_ppWords;
+		char** m_ppWords;	//TODO нужен ли тут public?
+		int m_size_ppWords;//TODO нужен ли тут public? почему int? у тебя может быть -2 слова?
 
-		Node(const std::vector<char*>* vector_of_words) : m_pPrev(nullptr), m_pNext(nullptr), m_size_ppWords(0), m_ppWords(nullptr)
+		Node(const std::vector<char*>* vector_of_words) : m_pPrev(nullptr), m_pNext(nullptr), m_size_ppWords(0), m_ppWords(nullptr) // TODO убрать отсюда! здесь только объявление
 		{							
 			this->m_ppWords=new char* [vector_of_words->size()];
 			for (auto it : *vector_of_words)
@@ -41,8 +41,8 @@ private:
 		}
 	};	
 
-	Node* m_head;
-	Node* m_last_element;
+	Node* m_head;//TODO нужен ли тут public?
+	Node* m_last_element;//TODO нужен ли тут public?
 	//Node* find_element(const int index) noexcept 
 	//{
 	//	int count;
