@@ -4,79 +4,57 @@
 #pragma once
 #include<iostream>
 #include <vector>
+#include "windows.h"
+
 class List
 {
 	class Node;
 public:
 	List();
 	~List();
-	int m_size_of_list; //TODO нужен ли тут public?
 	
+	List(const List&);
+	List(List&&) noexcept;
+	const List& operator=(const List&);
+	const List& operator=(List&&);
 	//void delete_element(const int index) noexcept;
-	void push_back(const std::vector<char*>* vector_of_words) noexcept;
-	void push_front(const std::vector<char*>* vector_of_words) noexcept;
+	void Push_Back(const std::string& arg_string) noexcept;
+	void Push_Front(const std::string& arg_string) noexcept;
+	void Add_Node(const std::string& arg_string, bool is_front) noexcept;
+	void Add_Node(Node* pNode,bool is_front) noexcept;
+	int Get_Size_List() noexcept;
 	void print_list();
 	//List::Node* operator[](const int index);
 		
-private:	
+private:		
+	CRITICAL_SECTION m_section;
 
 	class Node
 	{
-	public:
+	public:		
+		Node(const Node&);
+		Node(Node&&) noexcept;	
+		const Node& operator=(const Node&);
+		const Node& operator=(Node&&);
+		Node(const std::string& arg_string);	
+		~Node();
+		size_t Get_Size_Data() noexcept;
+		size_t Count_Words(const std::string& arg_string);
+		char const* const* const Get_Data();
+
+
 		Node* m_pPrev;
 		Node* m_pNext;
-		char** m_ppWords;	//TODO нужен ли тут public?
-		int m_size_ppWords;//TODO нужен ли тут public? почему int? у тебя может быть -2 слова?
+	private:					
 
-		Node(const std::vector<char*>* vector_of_words) : m_pPrev(nullptr), m_pNext(nullptr), m_size_ppWords(0), m_ppWords(nullptr) // TODO убрать отсюда! здесь только объявление
-		{							
-			this->m_ppWords=new char* [vector_of_words->size()];
-			for (auto it : *vector_of_words)
-			{						
-				size_t len = (strlen(it) + 1) * sizeof(char);
-				m_ppWords[m_size_ppWords] = new char[len];
-				memcpy(m_ppWords[m_size_ppWords], it, len);				
-				m_size_ppWords++;
-			}					
-		}
+		size_t m_word_count;
+		char** m_ppWords;
 	};	
 
-	Node* m_head;//TODO нужен ли тут public?
-	Node* m_last_element;//TODO нужен ли тут public?
-	//Node* find_element(const int index) noexcept 
-	//{
-	//	int count;
-	//	Node* current = nullptr;
-	//	bool is_head_of_list;
-	//	if (index <= m_size_of_list / 2)
-	//	{
-	//		current = this->m_head;
-	//		is_head_of_list = true;
-	//		count = 0;
-	//	}
-	//	else
-	//	{
-	//		current = this->m_last_element;
-	//		is_head_of_list = false;
-	//		count = m_size_of_list;
-	//	}
-	//	while (current != nullptr)
-	//	{
-	//		if (count == index)
-	//		{
-	//			return current;
-	//		}
-	//		if (is_head_of_list)
-	//		{
-	//			current = current->m_pNext;
-	//			count++;
-	//		}
-	//		else
-	//		{
-	//			current = current->m_pPrev;
-	//			count--;
-	//		}
-	//
-	//	}
-	//}
+	Node* m_head;
+	Node* m_last_element;	
+	int m_size_of_list; 
 };
+
+
+
