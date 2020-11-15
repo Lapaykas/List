@@ -21,9 +21,15 @@
     <ClCompile Include="ClassList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Raii.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClassList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Raii.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,27 +2,31 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "ClassList.h"
+#include "Raii.h"
 
 List::List() : m_size_of_list(0),m_head(nullptr),m_last_element(nullptr)
 {	
-	InitializeCriticalSection(&m_section);
+	//InitializeCriticalSection(&m_section);
 } 
 
 List::~List()
 {
 	Node* current = this->m_head;
-	while (current->m_pNext!=nullptr)
+	if (m_head != nullptr)
 	{
-		current = current->m_pNext;
-		delete current->m_pPrev;
+		while (current->m_pNext != nullptr)
+		{
+			current = current->m_pNext;
+			delete current->m_pPrev;
+		}
+		delete current;
+		//DeleteCriticalSection(&m_section);
 	}
-	delete current;
-	DeleteCriticalSection(&m_section);
 }
 
 List::List(const List& other): m_size_of_list(0)
 {		 
-	InitializeCriticalSection(&this->m_section);
+	//InitializeCriticalSection(&this->m_section);
 	int count = 0;
 	Node* current=other.m_head;	
 	while (count < other.m_size_of_list)
@@ -38,7 +42,7 @@ const List& List::operator=(const List& other)
 {
 	if (&other == this)
 		return *this;
-	InitializeCriticalSection(&this->m_section);
+	//InitializeCriticalSection(&this->m_section);
 	int count = 0;
 	Node* current = other.m_head;
 	while (count < other.m_size_of_list)
@@ -83,19 +87,19 @@ const List::Node& List::Node::operator=(const Node& other)
 
 List::List(List&& other) noexcept
 {
-	InitializeCriticalSection(&m_section);
+	//InitializeCriticalSection(&m_section);
 	m_size_of_list = other.m_size_of_list;
 	m_head = other.m_head;
-	other.m_head = nullptr;
 	m_last_element = other.m_last_element;
+	other.m_head = nullptr;	
 	other.m_last_element = nullptr;
 }
 
-const List& List::operator=(List&& other)
+const List& List::operator=(List&& other) noexcept
 {
 	if (&other == this)
 		return *this;
-	InitializeCriticalSection(&m_section);
+	//InitializeCriticalSection(&m_section);
 	m_size_of_list = other.m_size_of_list;
 	m_head = other.m_head;
 	other.m_head = nullptr;
@@ -156,7 +160,8 @@ void List::Add_Node(const std::string& arg_string, bool is_front) noexcept
 
 void List::Add_Node(Node* pNode, bool is_front) noexcept
 {
-	EnterCriticalSection(&m_section);
+	//EnterCriticalSection(&m_section);
+	Raii rai();
 	if (m_head == nullptr)
 	{
 		m_head = m_last_element = pNode;
@@ -179,7 +184,7 @@ void List::Add_Node(Node* pNode, bool is_front) noexcept
 		}
 	}
 	m_size_of_list++;
-	LeaveCriticalSection(&m_section);
+	//LeaveCriticalSection(&m_section);
 }
 
 int List::Get_Size_List() noexcept

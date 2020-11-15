@@ -37,16 +37,15 @@ void __cdecl AdderThreadProc (void* pArgs)
 
 int main()
 {    
-       
-	    
+       	    
 	List lst;
 
-	HANDLE hTr[5]; //TODO не корректный вывод!
-	for (size_t i = 0; i < 5; i++)
+	HANDLE hTr[2]; //TODO не корректный вывод!
+	for (size_t i = 0; i < 2; i++)
 	{
 		hTr[i] = (HANDLE)_beginthread(AdderThreadProc, 0, &lst);
 	}
-	WaitForMultipleObjects(5, hTr, TRUE, INFINITE);
+	WaitForMultipleObjects(2, hTr, TRUE, INFINITE);
 	
 	lst.print_list();
 	std::cout << std::endl;

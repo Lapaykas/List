@@ -16,18 +16,16 @@ public:
 	List(const List&);
 	List(List&&) noexcept;
 	const List& operator=(const List&);
-	const List& operator=(List&&);
-	//void delete_element(const int index) noexcept;
+	const List& operator=(List&&) noexcept;	
 	void Push_Back(const std::string& arg_string) noexcept;
 	void Push_Front(const std::string& arg_string) noexcept;
 	void Add_Node(const std::string& arg_string, bool is_front) noexcept;
 	void Add_Node(Node* pNode,bool is_front) noexcept;
 	int Get_Size_List() noexcept;
 	void print_list();
-	//List::Node* operator[](const int index);
 		
 private:		
-	CRITICAL_SECTION m_section;
+	//CRITICAL_SECTION m_section;
 
 	class Node
 	{
