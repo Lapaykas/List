@@ -2,11 +2,12 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
 #include "ClassList.h"
-#include "Raii.h"
+
 
 List::List() : m_size_of_list(0),m_head(nullptr),m_last_element(nullptr)
 {	
 	//InitializeCriticalSection(&m_section);
+	RAI = new Raii();
 } 
 
 List::~List()
@@ -22,6 +23,7 @@ List::~List()
 		delete current;
 		//DeleteCriticalSection(&m_section);
 	}
+	delete RAI;
 }
 
 List::List(const List& other): m_size_of_list(0)
@@ -136,7 +138,7 @@ const List::Node& List::Node::operator=(Node&& other)
 
 
 void List::Push_Back(const std::string& arg_string) noexcept
-{		
+{			
 	Add_Node(arg_string, false);	
 }
 
@@ -146,7 +148,7 @@ void List::Push_Front(const std::string& arg_string) noexcept
 }
 
 void List::Add_Node(const std::string& arg_string, bool is_front) noexcept
-{
+{	
 	try 
 	{
 		Node* pNew_node = new Node(arg_string);	
@@ -160,8 +162,8 @@ void List::Add_Node(const std::string& arg_string, bool is_front) noexcept
 
 void List::Add_Node(Node* pNode, bool is_front) noexcept
 {
-	//EnterCriticalSection(&m_section);
-	Raii rai();
+	//EnterCriticalSection(&m_section);	
+	RAI->lock();
 	if (m_head == nullptr)
 	{
 		m_head = m_last_element = pNode;

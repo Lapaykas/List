@@ -1,25 +1,17 @@
 #include "Raii.h"
+#include "atlbase.h"
 
-Raii::Raii()
+
+
+
+void Resource::lock()
 {
-	InitializeCriticalSection(&m_section);
-	lock();
+	EnterCriticalSection(&m_res_section);
 	std::cout << "Node is attach" << std::endl;
 }
 
-Raii::~Raii()
+void Resource::unlock()
 {
-	unlock();
-	DeleteCriticalSection(&m_section);
+	LeaveCriticalSection(&m_res_section);
 	std::cout << "Node is detach" << std::endl;
-}
-
-void Raii::lock()
-{
-	EnterCriticalSection(&m_section);
-}
-
-void Raii::unlock()
-{
-	LeaveCriticalSection(&m_section);
 }

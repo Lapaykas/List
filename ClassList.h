@@ -5,6 +5,7 @@
 #include<iostream>
 #include <vector>
 #include "windows.h"
+#include "Raii.h"
 
 class List
 {
@@ -26,7 +27,7 @@ public:
 		
 private:		
 	//CRITICAL_SECTION m_section;
-
+	Raii* RAI;
 	class Node
 	{
 	public:		
