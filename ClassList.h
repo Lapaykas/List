@@ -27,7 +27,7 @@ public:
 		
 private:		
 	//CRITICAL_SECTION m_section;
-	Raii* RAI;
+	Synchronisation SYNC;
 	class Node
 	{
 	public:		

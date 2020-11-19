@@ -1,45 +1,32 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
+
 #pragma once
 #include <iostream>
 #include "windows.h"
 
-class Resource // TODO что за название, где final, const, noexcept
+class CCSGuard // TODO что за название, где final, const, noexcept
 {
 public:
-	Resource(CRITICAL_SECTION* section)  //TODO а почему ты только две функции реализовал в cpp? либо все здесь, либо все туда. 
-	{
-		m_res_section = *section; //TODO херню сделал. Зачем разименовал
-		lock();		
-	}
-	~Resource() 
-	{
-		unlock();
-	}
-	void lock(); //TODO Именование функций
-	void unlock(); //Лишние функции
+	CCSGuard(LPCRITICAL_SECTION section);  
+	~CCSGuard();
+	
 private:
-	CRITICAL_SECTION m_res_section;
+	CRITICAL_SECTION *m_res_section;
 };
 
-class Raii // TODO что за название
+class Synchronisation 
 {
 public:
-	Raii()
-	{
-		InitializeCriticalSection(&m_section);		
-	}
-	~Raii()
-	{		
-		DeleteCriticalSection(&m_section);
-	}
+	Synchronisation();
+	~Synchronisation();
+	
+	operator LPCRITICAL_SECTION();
 
-	//operator LPCRITICAL_SECTION() {}; //TODO где?
-
-	void lock() //Лишняя функция и не правильная. При вызове lock берется и сразу отпускается Resource
-	{
-		Resource res(&m_section);
-	}
+	
 private:
-	CRITICAL_SECTION m_section;
+	CRITICAL_SECTION m_section;	
 };
 
 /*  Ты в классе хранишь свою обертку над критической секцией - ты это сделал

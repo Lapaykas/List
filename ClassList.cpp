@@ -7,7 +7,6 @@
 List::List() : m_size_of_list(0),m_head(nullptr),m_last_element(nullptr)
 {	
 	//InitializeCriticalSection(&m_section);
-	RAI = new Raii();
 } 
 
 List::~List()
@@ -22,8 +21,7 @@ List::~List()
 		}
 		delete current;
 		//DeleteCriticalSection(&m_section);
-	}
-	delete RAI;
+	}	
 }
 
 List::List(const List& other): m_size_of_list(0)
@@ -162,8 +160,7 @@ void List::Add_Node(const std::string& arg_string, bool is_front) noexcept
 
 void List::Add_Node(Node* pNode, bool is_front) noexcept
 {
-	//EnterCriticalSection(&m_section);	
-	RAI->lock();
+	CCSGuard lock(SYNC);
 	if (m_head == nullptr)
 	{
 		m_head = m_last_element = pNode;
@@ -186,6 +183,7 @@ void List::Add_Node(Node* pNode, bool is_front) noexcept
 		}
 	}
 	m_size_of_list++;
+	
 	//LeaveCriticalSection(&m_section);
 }
 
@@ -281,62 +279,9 @@ size_t List::Node::Count_Words(const std::string& arg_string)
 	}
 	return count;	
 }
-
+ 
 char const* const* const List::Node::Get_Data()
 {	
 	return m_ppWords;
 }
 
-
-//void List::delete_element(const int index) noexcept
-//{
-//	Node* temp=find_element(index);
-//	temp->m_pNext->m_pPrev = temp->m_pPrev;
-//	temp->m_pPrev->m_pNext = temp->m_pNext;
-//	delete temp;
-//	m_size_of_list--;
-//}
-
-
-//const char** List::Node::get_data()
-//{
-//	
-//}
-
-
-//List::Node* List::operator[](const int index)
-//{
-//	int count;
-//	Node* current=nullptr;
-//	bool is_head_of_list;
-//	if (index <= m_size_of_list / 2)
-//	{
-//		current = this->m_head;
-//		is_head_of_list = true;
-//		count = 0;
-//	}
-//	else
-//	{
-//		current = this->m_last_element;
-//		is_head_of_list = false;
-//		count = m_size_of_list-1;
-//	}
-//	while (current!=nullptr)
-//	{
-//		if (count == index)
-//		{
-//			return current;
-//		}
-//		if (is_head_of_list)
-//		{
-//			current = current->m_pNext;
-//			count++;
-//		}
-//		else
-//		{
-//			current = current->m_pPrev;
-//			count--;
-//		}
-//		
-//	}
-//}
