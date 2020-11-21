@@ -142,10 +142,14 @@
     <ClCompile Include="List.cpp" />
     <ClCompile Include="ClassList.cpp" />
     <ClCompile Include="Raii.cpp" />
+    <ClCompile Include="SQLlite\shell.c" />
+    <ClCompile Include="SQLlite\sqlite3.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClassList.h" />
     <ClInclude Include="Raii.h" />
+    <ClInclude Include="SQLlite\sqlite3.h" />
+    <ClInclude Include="SQLlite\sqlite3ext.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

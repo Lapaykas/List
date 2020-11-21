@@ -3,43 +3,28 @@
 
 
 #include <iostream>
-#include "ClassList.h"
 #include <sstream>
 #include <vector>
 #include <process.h>
 #include <windows.h>
 
+#include "ClassList.h"
 
 
-void foo()
-{
-	
-
-
-}
 
 void __cdecl AdderThreadProc (void* pArgs)
 {
     List* pLst = reinterpret_cast<List*>(pArgs);
-
-   // const std::vector<std::string> names_of_military{
 	pLst->Push_Back("privet\0");
 	pLst->Push_Back("vojskovaya chast specialnogo naznacheniya gru");
-	//pLst->Push_Back("1-ya brigada upravleniya");
-	//pLst->Push_Back("357 uchebniy centr vvs");
-	//pLst->Push_Back("183-yi mezhvidovoy regionalnyi uchebnyi centr");
-
-    //for (auto it : names_of_military)
-    //{
-    //    stringToList(it, pLst);
-    //}
+	pLst->Push_Back("1-ya brigada upravleniya");
+	pLst->Push_Back("357 uchebniy centr vvs");
+	pLst->Push_Back("183-yi mezhvidovoy regionalnyi uchebnyi centr");
 }
 
 int main()
-{    
-       	    
+{           	    
 	List lst;
-
 	HANDLE hTr[2]; //TODO не корректный вывод!
 	for (size_t i = 0; i < 2; i++)
 	{
@@ -58,13 +43,13 @@ int main()
    
 	
 
-	_CrtMemState s1;
-	_CrtMemCheckpoint(&s1);
-	_CrtMemDumpStatistics(&s1);
-	foo();
-	_CrtMemState s2;
-	_CrtMemCheckpoint(&s2);
-	_CrtMemDumpStatistics(&s2);
+	//_CrtMemState s1;
+	//_CrtMemCheckpoint(&s1);
+	//_CrtMemDumpStatistics(&s1);
+	//
+	//_CrtMemState s2;
+	//_CrtMemCheckpoint(&s2);
+	//_CrtMemDumpStatistics(&s2);
 
     return 0;
 }
